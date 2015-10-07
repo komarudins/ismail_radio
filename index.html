@@ -1,0 +1,104 @@
+<!DOCTYPE html> 
+    <html> 
+       <head> 
+         <meta name="viewport" content="width=device-width, initial-scale=1"> 
+         <title>Ismail Radio</title> 
+         <link rel="stylesheet" href="js/jquery.mobile-1.4.2.min.css" /> 
+         <script type="text/javascript" src="cordova-1.9.0.js"></script> 
+         <script type="text/javascript" src="js/jquery-1.10.2.min.js"></script> 
+         <script type="text/javascript" src="js/jquery.mobile-1.4.2.min.js"></script> 
+       </head> 
+      
+<div data-role="page" data-theme="a" id="about">
+<!--<div data-role="header" data-position="fixed">
+<h1>Ismail Radio</h1>
+</div>-->
+<div data-role="content">
+<p><center>	<a href="#gambar" data-rel="popup" data-position-to="window">
+			<img src="images/logo-ismail-radio.png" alt="Ismail Radio" ></a></center></p>
+	<div data-role="popup" id="gambar">	   
+		<a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-notext ui-btn-right">Tutup</a><img src="images/logo_zoom.png" style="width:200%" alt="Ismail Radio">
+	</div>
+<div data-role="collapsible" data-collapsed="false" data-icon="home" >
+<script type="text/javascript" charset="utf-8" src="phonegap.0.9.5.js"></script>
+<script type="text/javascript" charset="utf-8">
+var myMedia = null;
+var playing = false;
+function playAudio() {
+if (!playing) {
+myMedia.play();
+document.getElementById('play').src = "images/pause.png";
+playing = true;
+} else {
+myMedia.pause();
+document.getElementById('play').src = "images/play.png";
+playing = false;
+}
+}
+function stopAudio() {
+myMedia.stop();
+playing = false;
+document.getElementById('play').src = "images/play.png";
+document.getElementById('audio_position').innerHTML = "0.000 sec";
+}
+function onLoad() {
+document.addEventListener("deviceready", onDeviceReady, false);
+}
+function onDeviceReady(){
+console.log("Got device ready");
+updateMedia();
+}
+function updateMedia(src) {
+// Clean up old file
+if (myMedia != null) {
+myMedia.release();
+}
+// Get the new media file
+var yourSelect = document.getElementById('playlist');
+myMedia = new
+Media(yourSelect.options[yourSelect.selectedIndex].value, stopAudio, null);
+// Update media position every second
+var mediaTimer = setInterval(function() {
+// get media position
+myMedia.getCurrentPosition(
+// success callback
+function(position) {
+if (position > -1) {
+document.getElementById('audio_position').innerHTML = (position/1000) + " sec";
+}
+},
+// error callback
+function(e) {
+console.log("Error getting pos=" + e);
+}
+);
+}, 1000);
+}
+function setAudioPosition(position) {
+document.getElementById('audio_position').innerHTML =position;
+}
+</script>
+<body onload="onLoad()"> 
+<h1>Radio Player</h1>
+<p id="audio_position">0.000 sec</p>
+<p>
+<select id="playlist" onchange="updateMedia()" data-icon="gear">
+<option  value="http://69.64.33.125:8156/;audio.mp3">Channel Ismail Radio</option>
+</select>
+</p>
+<center>
+<a href="#" onclick="playAudio()"><img id="play" src="images/play.png"></a>
+<a href="#" onclick="stopAudio()"><img id="stop" src="images/stop.png"></a>
+</center>
+</body>
+</div>
+</div>
+<div data-role="footer" data-id="foo1" data-position="fixed">
+		<div data-role="navbar">
+			<ul>
+				<li><a href="tel:02184994343">Kontak</a></li>
+				<li><a href="http://www.ismailradio.com/" class="ui-btn-active ui-state-persist">Website</a></li>
+				<li><a href="mailto:ibrahimradio2013@gmail.com">Email</a></li>
+			</ul>
+		</div><!-- /navbar -->
+	</div><!-- /footer -->
